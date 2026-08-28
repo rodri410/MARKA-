@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MARKA - Catálogo Interactivo</title>
+    <style>
+        :root {
+            --bg-pastel: #fbf7f4;
+            --card-bg: #ffffff;
+            --accent-nude: #e8d5c8;
+            --accent-soft: #f3e8e2;
+            --text-dark: #1f1f1f;
+            --text-muted: #666666;
+            --primary-black: #111111;
+            --brand-gold: #c59b27;
+            --font-main: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background-color: var(--bg-pastel);
+            color: var(--text-dark);
+            line-height: 1.6;
+            padding-bottom: 60px;
+        }
+
+        /* HEADER & BRANDING */
+        header {
+            background-color: var(--primary-black);
+            color: #ffffff;
+            text-align: center;
+            padding: 30px 20px;
+        }
+
+        header h1 {
+            font-size: 2.4rem;
+            letter-spacing: 4px;
+            font-weight: 300;
+            text-transform: uppercase;
+        }
+
+        header p {
+            font-size: 0.95rem;
+            color: var(--accent-nude);
+            margin-top: 5px;
+            letter-spacing: 1px;
+        }
+
+        /* CATEGORIES NAV */
+        nav.categories {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            padding: 20px;
+            background-color: #ffffff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+            flex-wrap: wrap;
+        }
+
+        .cat-btn {
+            background-color: var(--accent-soft);
+            color: var(--text-dark);
+            border: 1px solid var(--accent-nude);
+            padding: 8px 18px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .cat-btn.active, .cat-btn:hover {
+            background-color: var(--primary-black);
+            color: #ffffff;
+            border-color: var(--primary-black);
+        }
+
+        /* MAIN CONTAINER */
+        .container {
+            max-width: 1100px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 1.6rem;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 50px;
+            height: 2px;
+            background-color: var(--primary-black);
+            margin: 8px auto 0;
+        }
+
+        /* INTERACTIVE 360 / ROTATIVE VIEWER */
+        .interactive-viewer {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            align-items: center;
+            margin-bottom: 50px;
+        }
+
+        @media (max-width: 768px) {
+            .interactive-viewer { grid-template-columns: 1fr; }
+        }
+
+        .rotator-container {
+            position: relative;
+            text-align: center;
+            background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+            border-radius: 10px;
+            padding: 20px;
+            border: 1px solid #f0f0f0;
+        }
+
+        .badge-360 {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: rgba(17, 17, 17, 0.85);
+            color: #ffffff;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        .viewer-img {
+            width: 100%;
+            max-height: 380px;
+            object-fit: contain;
+            border-radius: 6px;
+        }
+
+        .rotator-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .ctrl-btn {
+            background: var(--primary-black);
+            color: white;
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.1rem;
+        }
+
+        .thumbs {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .thumb-img {
+            width: 45px;
+            height: 45px;
+            object-fit: cover;
+            border-radius: 4px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            opacity: 0.6;
+        }
+
+        .thumb-img.active {
+            border-color: var(--primary-black);
+            opacity: 1;
+        }
+
+        /* INFO PANEL */
+        .info-panel .category-tag {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--brand-gold);
+            font-weight: 700;
+        }
+
+        .info-panel h2 {
+            font-size: 1.8rem;
+            margin: 5px 0 10px;
+            font-weight: 400;
+        }
+
+        .info-panel .price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-black);
+            margin-bottom: 15px;
+        }
+
+        .info-panel p.desc {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+        }
+
+        .spec-grid {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .spec-item {
+            background-color: var(--accent-soft);
+            padding: 8px 14px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .btn-whatsapp {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background-color: var(--primary-black);
+            color: white;
+            text-decoration: none;
+            padding: 14px 28px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 1rem;
+            width: 100%;
+        }
+
+        /* GRID CATALOG */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 25px;
+        }
+
+        .product-card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.04);
+            border: 1px solid #f2ece9;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-img-wrapper {
+            height: 260px;
+            background-color: #f7f3f0;
+        }
+
+        .card-img-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .card-body {
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .card-body h3 {
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+
+        .card-body .card-price {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--primary-black);
+            margin-bottom: 10px;
+        }
+
+        .card-body .btn-card-wa {
+            margin-top: auto;
+            background-color: var(--accent-soft);
+            color: var(--primary-black);
+            text-align: center;
+            text-decoration: none;
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            border: 1px solid var(--accent-nude);
+        }
+
+        .actions-bar {
+            text-align: center;
+            margin: 40px 0 20px;
+        }
+
+        .btn-pdf {
+            background-color: var(--primary-black);
+            color: #ffffff;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-size: 0.95rem;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        /* CONFIGURACIÓN DE IMPRESIÓN PARA GUARDAR COMO PDF */
+        @media print {
+            header p, nav.categories, .rotator-controls, .thumbs, .actions-bar, .btn-whatsapp, .btn-card-wa {
+                display: none !important;
+            }
+            body { background-color: #ffffff; }
+            .container { max-width: 100%; margin: 0; padding: 0; }
+            .interactive-viewer { box-shadow: none; border: 1px solid #ddd; page-break-after: always; }
+            .product-card { box-shadow: none; border: 1px solid #eee; page-break-inside: avoid; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>MARKL</h1>
+        <p>Boutique Femenina & Lencería Elegante</p>
+    </header>
+
+    <nav class="categories">
+        <button class="cat-btn active" onclick="filterCategory('todos')">Ver Todo</button>
+        <button class="cat-btn" onclick="filterCategory('blusas')">Blusas y Tops</button>
+        <button class="cat-btn" onclick="filterCategory('faldas')">Faldas</button>
+        <button class="cat-btn" onclick="filterCategory('lenceria')">Ropa Interior</button>
+    </nav>
+
+    <div class="container">
+        
+        <h2 class="section-title">Prenda Destacada (Vista 360°)</h2>
+
+        <div class="interactive-viewer">
+            <div class="rotator-container">
+                <span class="badge-360">↻ Vista 360° / Rotativa</span>
+                <img id="rotatorImg" class="viewer-img" src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=600&auto=format&fit=crop" alt="Vista Producto MARKL">
+                
+                <div class="rotator-controls">
+                    <button class="ctrl-btn" onclick="prevAngle()">❮</button>
+                    <button id="playBtn" class="ctrl-btn" onclick="togglePlay()">⏸</button>
+                    <button class="ctrl-btn" onclick="nextAngle()">❯</button>
+                </div>
+
+                <div class="thumbs">
+                    <img class="thumb-img active" src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=200" onclick="setAngle(0)">
+                    <img class="thumb-img" src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?w=200" onclick="setAngle(1)">
+                    <img class="thumb-img" src="https://images.unsplash.com/photo-1496747611176-843222e1e57c?w=200" onclick="setAngle(2)">
+                </div>
+            </div>
+
+            <div class="info-panel">
+                <span class="category-tag">Edición Especial</span>
+                <h2 id="viewTitle">Conjunto Elegante MARKL</h2>
+                <div class="price" id="viewPrice">$450.00 MXN</div>
+                <p class="desc" id="viewDesc">
+                    Prenda confeccionada con telas de suave textura y excelente ajuste. Ideal para lucir un estilo fresco y sofisticado.
+                </p>
+
+                <div class="spec-grid">
+                    <div class="spec-item">Tallas: CH, M, G</div>
+                    <div class="spec-item">Tela: Algodón premium</div>
+                </div>
+
+                <a href="https://wa.me/5210000000000?text=Hola%20MARKL,%20me%20interesa%20la%20Prenda%20Destacada" class="btn-whatsapp" target="_blank">
+                    💬 Pedir por WhatsApp
+                </a>
+            </div>
+        </div>
+
+        <h2 class="section-title">Colección Disponible</h2>
+
+        <div class="product-grid" id="catalogGrid">
+            <div class="product-card" data-cat="blusas">
+                <div class="card-img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1551163943-3f6a855d1153?w=500" alt="Blusa Satinada MARKL">
+                </div>
+                <div class="card-body">
+                    <h3>Blusa Satinada Pastel</h3>
+                    <div class="card-price">$280.00 MXN</div>
+                    <a href="https://wa.me/5210000000000?text=Hola%20MARKL,%20me%20interesa%20la%20Blusa%20Satinada" class="btn-card-wa" target="_blank">Pedir en WhatsApp</a>
+                </div>
+            </div>
+
+            <div class="product-card" data-cat="faldas">
+                <div class="card-img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1583496661160-fb5886a0aaaa?w=500" alt="Falda Plisada">
+                </div>
+                <div class="card-body">
+                    <h3>Falda Plisada Elegante</h3>
+                    <div class="card-price">$320.00 MXN</div>
+                    <a href="https://wa.me/5210000000000?text=Hola%20MARKL,%20me%20interesa%20la%20Falda%20Plisada" class="btn-card-wa" target="_blank">Pedir en WhatsApp</a>
+                </div>
+            </div>
+
+            <div class="product-card" data-cat="lenceria">
+                <div class="card-img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1578632767115-351597cf2477?w=500" alt="Conjunto Lencería Encaje">
+                </div>
+                <div class="card-body">
+                    <h3>Top Lencería Encaje Soft</h3>
+                    <div class="card-price">$220.00 MXN</div>
+                    <a href="https://wa.me/5210000000000?text=Hola%20MARKL,%20me%20interesa%20el%20Top%20Lencería" class="btn-card-wa" target="_blank">Pedir en WhatsApp</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="actions-bar">
+            <button class="btn-pdf" onclick="window.print()">📥 Descargar / Guardar en PDF</button>
+        </div>
+
+    </div>
+
+    <script>
+        const angles = [
+            {
+                img: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=600&auto=format&fit=crop",
+                title: "Conjunto Elegante MARKL - Frente",
+                price: "$450.00 MXN",
+                desc: "Vista frontal destacando el escote y la caída natural de la prenda."
+            },
+            {
+                img: "https://images.unsplash.com/photo-1529139574466-a303027c1d8b?w=600&auto=format&fit=crop",
+                title: "Conjunto Elegante MARKL - Perfil",
+                price: "$450.00 MXN",
+                desc: "Vista lateral mostrando la costura fina y el ajuste entallado a la cintura."
+            },
+            {
+                img: "https://images.unsplash.com/photo-1496747611176-843222e1e57c?w=600&auto=format&fit=crop",
+                title: "Conjunto Elegante MARKL - Detalle",
+                price: "$450.00 MXN",
+                desc: "Detalle de textura y acabado impecable."
+            }
+        ];
+
+        let currentIdx = 0;
+        let isPlaying = true;
+        let autoRotateTimer = setInterval(nextAngle, 3000);
+
+        function updateViewer() {
+            const item = angles[currentIdx];
+            document.getElementById('rotatorImg').src = item.img;
+            document.getElementById('viewTitle').innerText = item.title;
+            document.getElementById('viewPrice').innerText = item.price;
+            document.getElementById('viewDesc').innerText = item.desc;
+
+            const thumbs = document.querySelectorAll('.thumb-img');
+            thumbs.forEach((t, i) => {
+                t.classList.toggle('active', i === currentIdx);
+            });
+        }
+
+        function setAngle(index) {
+            currentIdx = index;
+            updateViewer();
+        }
+
+        function nextAngle() {
+            currentIdx = (currentIdx + 1) % angles.length;
+            updateViewer();
+        }
+
+        function prevAngle() {
+            currentIdx = (currentIdx - 1 + angles.length) % angles.length;
+            updateViewer();
+        }
+
+        function togglePlay() {
+            isPlaying = !isPlaying;
+            document.getElementById('playBtn').innerText = isPlaying ? "⏸" : "▶";
+            if (isPlaying) {
+                autoRotateTimer = setInterval(nextAngle, 3000);
+            } else {
+                clearInterval(autoRotateTimer);
+            }
+        }
+
+        function filterCategory(cat) {
+            const cards = document.querySelectorAll('.product-card');
+            const buttons = document.querySelectorAll('.cat-btn');
+
+            buttons.forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
+
+            cards.forEach(card => {
+                if (cat === 'todos' || card.getAttribute('data-cat') === cat) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>
