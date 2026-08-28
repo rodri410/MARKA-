@@ -23,6 +23,10 @@
             padding: 0;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             font-family: var(--font-main);
             background-color: var(--bg-pastel);
@@ -37,31 +41,37 @@
             color: #ffffff;
             text-align: center;
             padding: 30px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
 
         header h1 {
             font-size: 2.4rem;
-            letter-spacing: 4px;
+            letter-spacing: 5px;
             font-weight: 300;
             text-transform: uppercase;
         }
 
         header p {
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             color: var(--accent-nude);
-            margin-top: 5px;
-            letter-spacing: 1px;
+            margin-top: 3px;
+            letter-spacing: 1.5px;
         }
 
-        /* CATEGORIES NAV */
+        /* CATEGORIES NAV (ANCLAJE DIRECTO) */
         nav.categories {
             display: flex;
             justify-content: center;
             gap: 12px;
-            padding: 20px;
+            padding: 15px 20px;
             background-color: #ffffff;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
             flex-wrap: wrap;
+            position: sticky;
+            top: 98px;
+            z-index: 999;
         }
 
         .cat-btn {
@@ -71,12 +81,13 @@
             padding: 8px 18px;
             border-radius: 20px;
             cursor: pointer;
-            font-size: 0.9rem;
+            font-size: 0.88rem;
             font-weight: 600;
+            text-decoration: none;
             transition: all 0.3s ease;
         }
 
-        .cat-btn.active, .cat-btn:hover {
+        .cat-btn:hover {
             background-color: var(--primary-black);
             color: #ffffff;
             border-color: var(--primary-black);
@@ -91,10 +102,11 @@
 
         .section-title {
             text-align: center;
-            font-size: 1.6rem;
-            margin-bottom: 25px;
+            font-size: 1.5rem;
+            margin: 40px 0 20px;
             text-transform: uppercase;
             letter-spacing: 2px;
+            scroll-margin-top: 180px;
         }
 
         .section-title::after {
@@ -106,7 +118,7 @@
             margin: 8px auto 0;
         }
 
-        /* INTERACTIVE 360 / ROTATIVE VIEWER */
+        /* INTERACTIVE ROTATIVE VIEWER CARD */
         .interactive-viewer {
             background-color: var(--card-bg);
             border-radius: 12px;
@@ -116,11 +128,14 @@
             grid-template-columns: 1fr 1fr;
             gap: 30px;
             align-items: center;
-            margin-bottom: 50px;
+            margin-bottom: 40px;
+            border: 1px solid #f2ece9;
         }
 
         @media (max-width: 768px) {
-            .interactive-viewer { grid-template-columns: 1fr; }
+            .interactive-viewer {
+                grid-template-columns: 1fr;
+            }
         }
 
         .rotator-container {
@@ -129,6 +144,7 @@
             background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
             border-radius: 10px;
             padding: 20px;
+            overflow: hidden;
             border: 1px solid #f0f0f0;
         }
 
@@ -140,7 +156,7 @@
             color: #ffffff;
             padding: 5px 12px;
             border-radius: 15px;
-            font-size: 0.75rem;
+            font-size: 0.72rem;
             letter-spacing: 1px;
             text-transform: uppercase;
             font-weight: bold;
@@ -148,8 +164,9 @@
 
         .viewer-img {
             width: 100%;
-            max-height: 380px;
+            height: 360px;
             object-fit: contain;
+            transition: opacity 0.3s ease;
             border-radius: 6px;
         }
 
@@ -169,7 +186,14 @@
             height: 36px;
             border-radius: 50%;
             cursor: pointer;
-            font-size: 1.1rem;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .ctrl-btn:hover {
+            opacity: 0.85;
         }
 
         .thumbs {
@@ -180,13 +204,14 @@
         }
 
         .thumb-img {
-            width: 45px;
-            height: 45px;
+            width: 48px;
+            height: 48px;
             object-fit: cover;
-            border-radius: 4px;
+            border-radius: 6px;
             cursor: pointer;
             border: 2px solid transparent;
-            opacity: 0.6;
+            opacity: 0.5;
+            transition: all 0.2s;
         }
 
         .thumb-img.active {
@@ -194,9 +219,13 @@
             opacity: 1;
         }
 
-        /* INFO PANEL */
+        /* PANEL DINÁMICO DE INFORMACIÓN */
+        .info-panel {
+            padding: 10px;
+        }
+
         .info-panel .category-tag {
-            font-size: 0.8rem;
+            font-size: 0.78rem;
             text-transform: uppercase;
             letter-spacing: 1.5px;
             color: var(--brand-gold);
@@ -204,35 +233,37 @@
         }
 
         .info-panel h2 {
-            font-size: 1.8rem;
-            margin: 5px 0 10px;
-            font-weight: 400;
+            font-size: 1.7rem;
+            margin: 5px 0 8px;
+            font-weight: 500;
         }
 
         .info-panel .price {
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             font-weight: 700;
             color: var(--primary-black);
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
 
         .info-panel p.desc {
             color: var(--text-muted);
-            font-size: 0.95rem;
-            margin-bottom: 20px;
+            font-size: 0.92rem;
+            margin-bottom: 18px;
+            min-height: 45px;
         }
 
         .spec-grid {
             display: flex;
-            gap: 15px;
-            margin-bottom: 25px;
+            gap: 12px;
+            margin-bottom: 22px;
+            flex-wrap: wrap;
         }
 
         .spec-item {
             background-color: var(--accent-soft);
-            padding: 8px 14px;
+            padding: 7px 14px;
             border-radius: 6px;
-            font-size: 0.85rem;
+            font-size: 0.82rem;
             font-weight: 600;
         }
 
@@ -244,14 +275,19 @@
             background-color: var(--primary-black);
             color: white;
             text-decoration: none;
-            padding: 14px 28px;
+            padding: 13px 25px;
             border-radius: 30px;
             font-weight: 600;
-            font-size: 1rem;
+            font-size: 0.95rem;
             width: 100%;
+            transition: background 0.3s;
         }
 
-        /* GRID CATALOG */
+        .btn-whatsapp:hover {
+            background-color: #333333;
+        }
+
+        /* GRID LOOKS COMPLETOS & MANIQUÍES */
         .product-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
@@ -263,13 +299,18 @@
             border-radius: 10px;
             overflow: hidden;
             box-shadow: 0 3px 12px rgba(0,0,0,0.04);
+            transition: transform 0.3s ease;
             border: 1px solid #f2ece9;
             display: flex;
             flex-direction: column;
         }
 
+        .product-card:hover {
+            transform: translateY(-4px);
+        }
+
         .card-img-wrapper {
-            height: 260px;
+            height: 280px;
             background-color: #f7f3f0;
         }
 
@@ -287,9 +328,9 @@
         }
 
         .card-body h3 {
-            font-size: 1.1rem;
-            font-weight: 500;
-            margin-bottom: 5px;
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin-bottom: 4px;
         }
 
         .card-body .card-price {
@@ -314,21 +355,20 @@
 
         .actions-bar {
             text-align: center;
-            margin: 40px 0 20px;
+            margin: 50px 0 20px;
         }
 
         .btn-pdf {
             background-color: var(--primary-black);
             color: #ffffff;
             border: none;
-            padding: 12px 25px;
+            padding: 13px 28px;
             border-radius: 25px;
             font-size: 0.95rem;
             cursor: pointer;
             font-weight: 600;
         }
 
-        /* CONFIGURACIÓN DE IMPRESIÓN PARA GUARDAR COMO PDF */
         @media print {
             header p, nav.categories, .rotator-controls, .thumbs, .actions-bar, .btn-whatsapp, .btn-card-wa {
                 display: none !important;
@@ -336,7 +376,6 @@
             body { background-color: #ffffff; }
             .container { max-width: 100%; margin: 0; padding: 0; }
             .interactive-viewer { box-shadow: none; border: 1px solid #ddd; page-break-after: always; }
-            .product-card { box-shadow: none; border: 1px solid #eee; page-break-inside: avoid; }
         }
     </style>
 </head>
@@ -344,179 +383,294 @@
 
     <header>
         <h1>MARKA</h1>
-        <p>Tu belleza interior</p>
+        <p>Boutique Femenina & Lencería Elegante</p>
     </header>
 
+    <!-- PESTAÑAS DE NAVEGACIÓN (ANCLAJE DIRECTO) -->
     <nav class="categories">
-        <button class="cat-btn active" onclick="filterCategory('todos')">Ver Todo</button>
-        <button class="cat-btn" onclick="filterCategory('blusas')">Blusas y Tops</button>
-        <button class="cat-btn" onclick="filterCategory('faldas')">Faldas</button>
-        <button class="cat-btn" onclick="filterCategory('lenceria')">Ropa Interior</button>
+        <a href="#sec-blusas" class="cat-btn">Blusas y Tops</a>
+        <a href="#sec-faldas" class="cat-btn">Faldas</a>
+        <a href="#sec-lenceria" class="cat-btn">Ropa Interior</a>
+        <a href="#sec-outfits" class="cat-btn">Looks Completos</a>
     </nav>
 
     <div class="container">
         
-        <h2 class="section-title">Prenda Destacada (Vista 360°)</h2>
-
-        <div class="interactive-viewer">
+        <!-- SECCIÓN 1: BLUSAS Y TOPS -->
+        <h2 class="section-title" id="sec-blusas">Blusas y Tops</h2>
+        <div class="interactive-viewer" id="viewer-blusas">
             <div class="rotator-container">
-                <span class="badge-360">↻ Vista 360° / Rotativa</span>
-                <img id="rotatorImg" class="viewer-img" src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=600&auto=format&fit=crop" alt="Vista Producto MARKL">
+                <span class="badge-360">↻ Vista Rotativa</span>
+                <img id="img-blusas" class="viewer-img" src="" alt="Blusa MARKA">
                 
                 <div class="rotator-controls">
-                    <button class="ctrl-btn" onclick="prevAngle()">❮</button>
-                    <button id="playBtn" class="ctrl-btn" onclick="togglePlay()">⏸</button>
-                    <button class="ctrl-btn" onclick="nextAngle()">❯</button>
+                    <button class="ctrl-btn" onclick="prevSlide('blusas')">❮</button>
+                    <button id="play-blusas" class="ctrl-btn" onclick="togglePlay('blusas')">⏸</button>
+                    <button class="ctrl-btn" onclick="nextSlide('blusas')">❯</button>
                 </div>
 
-                <div class="thumbs">
-                    <img class="thumb-img active" src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=200" onclick="setAngle(0)">
-                    <img class="thumb-img" src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?w=200" onclick="setAngle(1)">
-                    <img class="thumb-img" src="https://images.unsplash.com/photo-1496747611176-843222e1e57c?w=200" onclick="setAngle(2)">
-                </div>
+                <div class="thumbs" id="thumbs-blusas"></div>
             </div>
 
             <div class="info-panel">
-                <span class="category-tag">Edición Especial</span>
-                <h2 id="viewTitle">Conjunto Elegante MARKL</h2>
-                <div class="price" id="viewPrice">$450.00 MXN</div>
-                <p class="desc" id="viewDesc">
-                    Prenda confeccionada con telas de suave textura y excelente ajuste. Ideal para lucir un estilo fresco y sofisticado.
-                </p>
+                <span class="category-tag">Colección Blusas</span>
+                <h2 id="title-blusas">...</h2>
+                <div class="price" id="price-blusas">...</div>
+                <p class="desc" id="desc-blusas">...</p>
 
                 <div class="spec-grid">
-                    <div class="spec-item">Tallas: CH, M, G</div>
-                    <div class="spec-item">Tela: Algodón premium</div>
+                    <div class="spec-item" id="talla-blusas">Tallas: --</div>
+                    <div class="spec-item" id="tela-blusas">Tela: --</div>
                 </div>
 
-                <a href="https://wa.me/5210000000000?text=Hola%20MARKL,%20me%20interesa%20la%20Prenda%20Destacada" class="btn-whatsapp" target="_blank">
-                    💬 Pedir por WhatsApp
+                <a id="wa-blusas" href="#" class="btn-whatsapp" target="_blank">
+                    💬 Pedir esta Blusa por WhatsApp
                 </a>
             </div>
         </div>
 
-        <h2 class="section-title">Colección Disponible</h2>
+        <!-- SECCIÓN 2: FALDAS -->
+        <h2 class="section-title" id="sec-faldas">Faldas Elegantes</h2>
+        <div class="interactive-viewer" id="viewer-faldas">
+            <div class="rotator-container">
+                <span class="badge-360">↻ Vista Rotativa</span>
+                <img id="img-faldas" class="viewer-img" src="" alt="Falda MARKA">
+                
+                <div class="rotator-controls">
+                    <button class="ctrl-btn" onclick="prevSlide('faldas')">❮</button>
+                    <button id="play-faldas" class="ctrl-btn" onclick="togglePlay('faldas')">⏸</button>
+                    <button class="ctrl-btn" onclick="nextSlide('faldas')">❯</button>
+                </div>
 
-        <div class="product-grid" id="catalogGrid">
-            <div class="product-card" data-cat="blusas">
+                <div class="thumbs" id="thumbs-faldas"></div>
+            </div>
+
+            <div class="info-panel">
+                <span class="category-tag">Colección Faldas</span>
+                <h2 id="title-faldas">...</h2>
+                <div class="price" id="price-faldas">...</div>
+                <p class="desc" id="desc-faldas">...</p>
+
+                <div class="spec-grid">
+                    <div class="spec-item" id="talla-faldas">Tallas: --</div>
+                    <div class="spec-item" id="tela-faldas">Tela: --</div>
+                </div>
+
+                <a id="wa-faldas" href="#" class="btn-whatsapp" target="_blank">
+                    💬 Pedir esta Falda por WhatsApp
+                </a>
+            </div>
+        </div>
+
+        <!-- SECCIÓN 3: ROPA INTERIOR -->
+        <h2 class="section-title" id="sec-lenceria">Ropa Interior & Lencería</h2>
+        <div class="interactive-viewer" id="viewer-lenceria">
+            <div class="rotator-container">
+                <span class="badge-360">↻ Vista Rotativa</span>
+                <img id="img-lenceria" class="viewer-img" src="" alt="Lencería MARKA">
+                
+                <div class="rotator-controls">
+                    <button class="ctrl-btn" onclick="prevSlide('lenceria')">❮</button>
+                    <button id="play-lenceria" class="ctrl-btn" onclick="togglePlay('lenceria')">⏸</button>
+                    <button class="ctrl-btn" onclick="nextSlide('lenceria')">❯</button>
+                </div>
+
+                <div class="thumbs" id="thumbs-lenceria"></div>
+            </div>
+
+            <div class="info-panel">
+                <span class="category-tag">Lencería Fina</span>
+                <h2 id="title-lenceria">...</h2>
+                <div class="price" id="price-lenceria">...</div>
+                <p class="desc" id="desc-lenceria">...</p>
+
+                <div class="spec-grid">
+                    <div class="spec-item" id="talla-lenceria">Tallas: --</div>
+                    <div class="spec-item" id="tela-lenceria">Tela: --</div>
+                </div>
+
+                <a id="wa-lenceria" href="#" class="btn-whatsapp" target="_blank">
+                    💬 Pedir esta Prenda por WhatsApp
+                </a>
+            </div>
+        </div>
+
+        <!-- SECCIÓN 4: LOOKS COMPLETOS & MANIQUÍES -->
+        <h2 class="section-title" id="sec-outfits">Looks Completos & Maniquíes</h2>
+
+        <div class="product-grid">
+            <div class="product-card">
                 <div class="card-img-wrapper">
-                    <img src="https://images.unsplash.com/photo-1551163943-3f6a855d1153?w=500" alt="Blusa Satinada MARKL">
+                    <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=500" alt="Look Primavera MARKA">
                 </div>
                 <div class="card-body">
-                    <h3>Blusa Satinada Pastel</h3>
-                    <div class="card-price">$280.00 MXN</div>
-                    <a href="https://wa.me/5210000000000?text=Hola%20MARKL,%20me%20interesa%20la%20Blusa%20Satinada" class="btn-card-wa" target="_blank">Pedir en WhatsApp</a>
+                    <h3>Look Primavera Completo</h3>
+                    <div class="card-price">$650.00 MXN</div>
+                    <a href="https://wa.me/5210000000000?text=Hola%20MARKA,%20me%20interesa%20el%20Look%20Primavera" class="btn-card-wa" target="_blank">Pedir Look en WhatsApp</a>
                 </div>
             </div>
 
-            <div class="product-card" data-cat="faldas">
+            <div class="product-card">
                 <div class="card-img-wrapper">
-                    <img src="https://images.unsplash.com/photo-1583496661160-fb5886a0aaaa?w=500" alt="Falda Plisada">
+                    <img src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?w=500" alt="Outfit Urbano Chic">
                 </div>
                 <div class="card-body">
-                    <h3>Falda Plisada Elegante</h3>
-                    <div class="card-price">$320.00 MXN</div>
-                    <a href="https://wa.me/5210000000000?text=Hola%20MARKL,%20me%20interesa%20la%20Falda%20Plisada" class="btn-card-wa" target="_blank">Pedir en WhatsApp</a>
+                    <h3>Outfit Urbano Chic</h3>
+                    <div class="card-price">$580.00 MXN</div>
+                    <a href="https://wa.me/5210000000000?text=Hola%20MARKA,%20me%20interesa%20el%20Outfit%20Urbano" class="btn-card-wa" target="_blank">Pedir Look en WhatsApp</a>
                 </div>
             </div>
 
-            <div class="product-card" data-cat="lenceria">
+            <div class="product-card">
                 <div class="card-img-wrapper">
-                    <img src="https://images.unsplash.com/photo-1578632767115-351597cf2477?w=500" alt="Conjunto Lencería Encaje">
+                    <img src="https://images.unsplash.com/photo-1496747611176-843222e1e57c?w=500" alt="Set Gala Casual">
                 </div>
                 <div class="card-body">
-                    <h3>Top Lencería Encaje Soft</h3>
-                    <div class="card-price">$220.00 MXN</div>
-                    <a href="https://wa.me/5210000000000?text=Hola%20MARKL,%20me%20interesa%20el%20Top%20Lencería" class="btn-card-wa" target="_blank">Pedir en WhatsApp</a>
+                    <h3>Set Gala & Noche</h3>
+                    <div class="card-price">$720.00 MXN</div>
+                    <a href="https://wa.me/5210000000000?text=Hola%20MARKA,%20me%20interesa%20el%20Set%20Gala" class="btn-card-wa" target="_blank">Pedir Look en WhatsApp</a>
                 </div>
             </div>
         </div>
 
         <div class="actions-bar">
-            <button class="btn-pdf" onclick="window.print()">📥 Descargar / Guardar en PDF</button>
+            <button class="btn-pdf" onclick="window.print()">📥 Descargar / Guardar Catálogo en PDF</button>
         </div>
 
     </div>
 
     <script>
-        const angles = [
-            {
-                img: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=600&auto=format&fit=crop",
-                title: "Conjunto Elegante MARKL - Frente",
-                price: "$450.00 MXN",
-                desc: "Vista frontal destacando el escote y la caída natural de la prenda."
-            },
-            {
-                img: "https://images.unsplash.com/photo-1529139574466-a303027c1d8b?w=600&auto=format&fit=crop",
-                title: "Conjunto Elegante MARKL - Perfil",
-                price: "$450.00 MXN",
-                desc: "Vista lateral mostrando la costura fina y el ajuste entallado a la cintura."
-            },
-            {
-                img: "https://images.unsplash.com/photo-1496747611176-843222e1e57c?w=600&auto=format&fit=crop",
-                title: "Conjunto Elegante MARKL - Detalle",
-                price: "$450.00 MXN",
-                desc: "Detalle de textura y acabado impecable."
-            }
-        ];
-
-        let currentIdx = 0;
-        let isPlaying = true;
-        let autoRotateTimer = setInterval(nextAngle, 3000);
-
-        function updateViewer() {
-            const item = angles[currentIdx];
-            document.getElementById('rotatorImg').src = item.img;
-            document.getElementById('viewTitle').innerText = item.title;
-            document.getElementById('viewPrice').innerText = item.price;
-            document.getElementById('viewDesc').innerText = item.desc;
-
-            const thumbs = document.querySelectorAll('.thumb-img');
-            thumbs.forEach((t, i) => {
-                t.classList.toggle('active', i === currentIdx);
-            });
-        }
-
-        function setAngle(index) {
-            currentIdx = index;
-            updateViewer();
-        }
-
-        function nextAngle() {
-            currentIdx = (currentIdx + 1) % angles.length;
-            updateViewer();
-        }
-
-        function prevAngle() {
-            currentIdx = (currentIdx - 1 + angles.length) % angles.length;
-            updateViewer();
-        }
-
-        function togglePlay() {
-            isPlaying = !isPlaying;
-            document.getElementById('playBtn').innerText = isPlaying ? "⏸" : "▶";
-            if (isPlaying) {
-                autoRotateTimer = setInterval(nextAngle, 3000);
-            } else {
-                clearInterval(autoRotateTimer);
-            }
-        }
-
-        function filterCategory(cat) {
-            const cards = document.querySelectorAll('.product-card');
-            const buttons = document.querySelectorAll('.cat-btn');
-
-            buttons.forEach(b => b.classList.remove('active'));
-            event.target.classList.add('active');
-
-            cards.forEach(card => {
-                if (cat === 'todos' || card.getAttribute('data-cat') === cat) {
-                    card.style.display = 'flex';
-                } else {
-                    card.style.display = 'none';
+        // AQUÍ AGREGAS O CAMBIAS LOS DATOS DE CADA SUBCATEGORÍA
+        const catalogData = {
+            blusas: [
+                {
+                    img: "https://images.unsplash.com/photo-1551163943-3f6a855d1153?w=600",
+                    title: "Blusa Satinada Pastel",
+                    price: "$280.00 MXN",
+                    desc: "Corte fluido con tacto sedoso, ideal para looks casuales o de oficina.",
+                    tallas: "CH, M, G",
+                    tela: "Satén Soft",
+                    wa: "https://wa.me/5210000000000?text=Hola%20MARKA,%20me%20interesa%20la%20Blusa%20Satinada%20Pastel"
+                },
+                {
+                    img: "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=600",
+                    title: "Camisa Oversize Algodón",
+                    price: "$310.00 MXN",
+                    desc: "Diseño holgado de máxima frescura y botones al tono.",
+                    tallas: "M, G, XG",
+                    tela: "Algodón 100%",
+                    wa: "https://wa.me/5210000000000?text=Hola%20MARKA,%20me%20interesa%20la%20Camisa%20Oversize"
                 }
+            ],
+            faldas: [
+                {
+                    img: "https://images.unsplash.com/photo-1583496661160-fb5886a0aaaa?w=600",
+                    title: "Falda Plisada Nude",
+                    price: "$320.00 MXN",
+                    desc: "Falda midi con pretina elástica adaptada a tu figura.",
+                    tallas: "CH, M, G",
+                    tela: "Poliéster Satinado",
+                    wa: "https://wa.me/5210000000000?text=Hola%20MARKA,%20me%20interesa%20la%20Falda%20Plisada"
+                },
+                {
+                    img: "https://images.unsplash.com/photo-1578632767115-351597cf2477?w=600",
+                    title: "Falda Corte A Elegante",
+                    price: "$290.00 MXN",
+                    desc: "Diseño clásico con caída suave que resalta la cintura.",
+                    tallas: "CH, M",
+                    tela: "Crepé Elástico",
+                    wa: "https://wa.me/5210000000000?text=Hola%20MARKA,%20me%20interesa%20la%20Falda%20Corte%20A"
+                }
+            ],
+            lenceria: [
+                {
+                    img: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=600",
+                    title: "Top Encaje Soft Premium",
+                    price: "$220.00 MXN",
+                    desc: "Lencería cómoda sin varilla para uso diario con detalle floral.",
+                    tallas: "32B, 34B, 36B",
+                    tela: "Encaje Suave",
+                    wa: "https://wa.me/5210000000000?text=Hola%20MARKA,%20me%20interesa%20el%20Top%20Encaje"
+                },
+                {
+                    img: "https://images.unsplash.com/photo-1529139574466-a303027c1d8b?w=600",
+                    title: "Set Lencería Confort",
+                    price: "$260.00 MXN",
+                    desc: "Tejido microfibra transpirable y costuras invisibles.",
+                    tallas: "CH, M, G",
+                    tela: "Microfibra Soft",
+                    wa: "https://wa.me/5210000000000?text=Hola%20MARKA,%20me%20interesa%20el%20Set%20Confort"
+                }
+            ]
+        };
+
+        // ESTADOS INDEPENDIENTES PARA CADA SUBCATEGORÍA
+        const state = {
+            blusas: { index: 0, playing: true, timer: null },
+            faldas: { index: 0, playing: true, timer: null },
+            lenceria: { index: 0, playing: true, timer: null }
+        };
+
+        // RENDERIZADO DINÁMICO
+        function renderCategory(cat) {
+            const data = catalogData[cat];
+            const currIdx = state[cat].index;
+            const item = data[currIdx];
+
+            // Actualiza imagen
+            document.getElementById(`img-${cat}`).src = item.img;
+            
+            // Actualiza todo el texto dinámicamente
+            document.getElementById(`title-${cat}`).innerText = item.title;
+            document.getElementById(`price-${cat}`).innerText = item.price;
+            document.getElementById(`desc-${cat}`).innerText = item.desc;
+            document.getElementById(`talla-${cat}`).innerText = `Tallas: ${item.tallas}`;
+            document.getElementById(`tela-${cat}`).innerText = `Tela: ${item.tela}`;
+            document.getElementById(`wa-${cat}`).href = item.wa;
+
+            // Actualiza miniaturas
+            const thumbsContainer = document.getElementById(`thumbs-${cat}`);
+            thumbsContainer.innerHTML = '';
+            data.forEach((d, i) => {
+                const img = document.createElement('img');
+                img.src = d.img;
+                img.className = `thumb-img ${i === currIdx ? 'active' : ''}`;
+                img.onclick = () => {
+                    state[cat].index = i;
+                    renderCategory(cat);
+                };
+                thumbsContainer.appendChild(img);
             });
         }
+
+        function nextSlide(cat) {
+            state[cat].index = (state[cat].index + 1) % catalogData[cat].length;
+            renderCategory(cat);
+        }
+
+        function prevSlide(cat) {
+            state[cat].index = (state[cat].index - 1 + catalogData[cat].length) % catalogData[cat].length;
+            renderCategory(cat);
+        }
+
+        function togglePlay(cat) {
+            state[cat].playing = !state[cat].playing;
+            document.getElementById(`play-${cat}`).innerText = state[cat].playing ? "⏸" : "▶";
+            
+            if (state[cat].playing) {
+                state[cat].timer = setInterval(() => nextSlide(cat), 3500);
+            } else {
+                clearInterval(state[cat].timer);
+            }
+        }
+
+        // INICIALIZACIÓN
+        window.onload = () => {
+            ['blusas', 'faldas', 'lenceria'].forEach(cat => {
+                renderCategory(cat);
+                state[cat].timer = setInterval(() => nextSlide(cat), 3500);
+            });
+        };
     </script>
 </body>
 </html>
